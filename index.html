@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jump Game</title>
+    <style>
+        #game {
+            width: 500px;
+            height: 200px;
+            border: 1px solid black;
+            margin: auto;
+            overflow: hidden;
+        }
+        
+        #scoreBoard {
+            display: flex;
+            justify-content: space-between;
+            width: 500px;
+            margin: auto;
+            font-weight: bold;
+        }
+        
+        #character {
+            width: 100px;
+            height: 100px;
+            background-image: url(man.png);
+            position: relative;
+            top: 100px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        @keyframes jump {
+            0% {
+                top: 100px;
+            }
+            30% {
+                top: 30px;
+            }
+            70% {
+                top: 30px;
+            }
+            100% {
+                top: 100px;
+            }
+        }
+        
+        .animate {
+            animation: jump 1s linear;
+        }
+        
+        #block {
+            width: 40px;
+            /* border-radius: 50%; */
+            height: 40px;
+            background-image: url(rock.png);
+            background-size: contain;
+            position: relative;
+            top: 65px;
+            left: 480px;
+            animation: block 3s infinite linear;
+            background-repeat: no-repeat;
+        }
+        
+        @keyframes block {
+            0% {
+                left: 500px
+            }
+            100% {
+                left: -50px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <div id="character"></div>
+        <div id="block"></div>
+    </div>
+    <div id="scoreBoard">
+        <div>Use Spacebar to Jump</div>
+        <div> Score:&nbsp;<span id="score">1</span>
+        </div>
+    </div>
+    <script>
+        var block = document.getElementById("block");
+        var scorebox = document.getElementById("score");
+        var score = 000;
+
+        function jump() {
+            if (character.classList == "animate") {
+                return;
+            }
+            character.classList.add("animate");
+            setTimeout(removeJump, 1000); //300ms = length of animation
+        };
+
+        function removeJump() {
+            character.classList.remove("animate");
+        }
+
+
+        function checkDead() {
+            let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+            let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
+            if (blockLeft < 30 && blockLeft > -48 && characterTop >= 100) {
+                alert("Game over");
+                score = 0;
+            }
+        }
+
+        function addScore() {
+            score++;
+            scorebox.innerHTML = score;
+        }
+
+        setInterval(checkDead, 10);
+        setInterval(addScore, 100);
+        var character = document.getElementById("character");
+        document.addEventListener("keydown", event => {
+            if (event.keyCode === 32) {
+                jump();
+            }
+            console.log(event.keyCode)
+        });
+    </script>
+</body>
+
+</html>
