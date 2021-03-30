@@ -108,7 +108,7 @@
             let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
             let blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
             if (blockLeft < 30 && blockLeft > -48 && characterTop >= 100) {
-                alert("Game over");
+                alert("Game over!!!\nYour Score is " + score);
                 score = 0;
             }
         }
